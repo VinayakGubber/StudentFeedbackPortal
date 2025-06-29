@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Complaint Portal</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- STUDENT LOGIN -->
+      <section id="studentLoginView" class="active">
+        <h2>Student Login</h2>
+        <form id="studentLoginForm">
+          <label for="studentRoll">Roll Number</label>
+          <input id="studentRoll" type="text" required />
+
+          <label for="studentPassword">Password</label>
+          <input id="studentPassword" type="password" required />
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p class="center">
+          Are you admin? <a href="admin.html" id="gotoAdminLogin">Login here</a>
+        </p>
+      </section>
+
+      <!-- STUDENT COMPLAINT -->
+      <section id="studentComplaintView">
+        <h2>Submit a Complaint</h2>
+        <form id="complaintForm" novalidate>
+          <label for="name">Full Name</label>
+          <input
+            id="name"
+            name="name"
+            required
+            type="text"
+            placeholder="Your full name"
+            readonly
+          />
+          <label for="rollNo">Roll Number</label>
+          <input
+            id="rollNo"
+            name="rollNo"
+            required
+            type="text"
+            placeholder="Your roll number"
+            readonly
+          />
+          <label for="email">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            required
+            type="email"
+            placeholder="Your email address"
+            readonly
+          />
+          <label for="mobile">Mobile Number</label>
+          <input
+            id="mobile"
+            name="mobile"
+            required
+            type="text"
+            placeholder="Your mobile number"
+            readonly
+          />
+          <label for="category">Complaint Category</label>
+          <select id="category" name="category" required>
+            <option disabled selected value="">Select category</option>
+            <option value="Academics">Academics</option>
+            <option value="Facilities">Facilities</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Transport">Transport</option>
+            <option value="Others" selected>Others</option>
+          </select>
+          <label for="message">Complaint Details</label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows="4"
+            placeholder="Describe your complaint in detail"
+          ></textarea>
+          <button type="submit">Submit Complaint</button>
+        </form>
+        <hr />
+        <h3>Your Submitted Complaints</h3>
+        <table id="studentComplaintsTable">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Complaint</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="center"><a href="/client" id="studentLogout">Logout</a></p>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Portal</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <main>
+      <!-- ADMIN LOGIN -->
+      <section id="adminLoginView" class="active">
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm" novalidate>
+          <label for="adminUsername">Username</label>
+          <input
+            id="adminUsername"
+            name="adminUsername"
+            required
+            type="text"
+            placeholder="Enter admin username"
+          />
+          <label for="adminPassword">Password</label>
+          <input
+            id="adminPassword"
+            name="adminPassword"
+            required
+            type="password"
+            placeholder="Enter admin password"
+          />
+          <button type="submit">Login</button>
+        </form>
+        <p class="center">
+          Are you student?
+          <a href="student.html" id="gotoStudentLogin">Login here</a>
+        </p>
+      </section>
+
+      <!-- ADMIN PORTAL -->
+      <section id="adminPortalView">
+        <header><h1>College Complaint & Feedback System</h1></header>
+        <h2>Admin Portal <span id="newComplaintBadge">New</span></h2>
+
+        <div class="dashboard-cards">
+          <div class="card total">
+            <i class="fas fa-file-alt"></i>
+            <div><strong id="totalCount">0</strong><span>Total</span></div>
+          </div>
+          <div class="card pending">
+            <i class="fas fa-hourglass-half"></i>
+            <div><strong id="pendingCount">0</strong><span>Pending</span></div>
+          </div>
+          <div class="card inprogress">
+            <i class="fas fa-spinner"></i>
+            <div>
+              <strong id="inProgressCount">0</strong><span>In Progress</span>
+            </div>
+          </div>
+          <div class="card resolved">
+            <i class="fas fa-check-circle"></i>
+            <div>
+              <strong id="resolvedCount">0</strong><span>Resolved</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="filters">
+          <select id="filterCategory">
+            <option value="All">Categories</option>
+            <option value="Academics">Academics</option>
+            <option value="Facilities">Facilities</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Transport">Transport</option>
+            <option value="Others">Others</option>
+          </select>
+          <select id="filterStatus">
+            <option value="All">Status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search complaints..."
+          />
+        </div>
+
+        <!-- <div style="text-align:right; margin-bottom:10px;">
+      <button onclick="exportToCSV()">Export to CSV <i class="fas fa-download"></i></button>
+    </div> -->
+
+        <table id="complaintsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Roll No</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Category</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 0 10px;
+          "
+        >
+          <!-- Logout Button (Left) -->
+          <button
+            id="logoutBtn"
+            style="padding: 10px 25px; font-size: 0.95rem; margin-right: 10px"
+          >
+            Logout
+          </button>
+
+          <!-- Export Button (Right) -->
+          <button
+            onclick="exportToCSV()"
+            style="padding: 10px 25px; font-size: 0.95rem; margin-left: 69%"
+          >
+            Export to CSV <i class="fas fa-download"></i>
+          </button>
+        </div>
+      </section>
+    </main>
+    <script src="script.js"></script>
+  </body>
+</html>
