@@ -315,3 +315,32 @@ async function updateTotalComplaintCount() {
     console.error("Failed to load complaint stats:", err);
   }
 }
+
+// CSV file export
+function exportToCSV() {
+  const table = document.getElementById("complaintsTable");
+  const rows = Array.from(table.querySelectorAll("tr"));
+
+  // Convert table rows to CSV format
+  const csv = rows
+    .map((row) => {
+      const cells = Array.from(row.querySelectorAll("th, td"));
+      // Skip the last cell if it's the Actions column (8th column)
+      return cells
+        .slice(0, -1) // remove .slice(0, -1) if you want to include "Actions"
+        .map((cell) => `"${cell.innerText.trim()}"`)
+        .join(",");
+    })
+    .join("\n");
+
+  // Create blob and download
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "complaints_data.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}

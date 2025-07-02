@@ -11,26 +11,438 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      /* Enhanced styling to match admin page */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: white;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      main {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      section {
+        display: none;
+        background: transparent;
+        overflow: hidden;
+      }
+
+      section.active {
+        display: block;
+      }
+
+      Login View Styling #studentLoginView {
+        max-width: 450px;
+        margin: 0 auto;
+        padding: 50px 40px;
+        text-align: center;
+        background: transparent;
+      }
+
+      #studentLoginView h2 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 2rem;
+        font-weight: 600;
+      }
+
+      #studentLoginView h2::before {
+        content: "🎓";
+        display: block;
+        font-size: 3rem;
+        margin-bottom: 15px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      label {
+        text-align: left;
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 5px;
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 15px;
+        border: 2px solid #e1e5e9;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        outline: none;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      button[type="submit"] {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 15px;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      button[type="submit"]:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      .center {
+        text-align: center;
+        margin-top: 25px;
+        color: #666;
+      }
+
+      .center a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .center a:hover {
+        text-decoration: underline;
+      }
+
+      /* Login Section */
+      #studentLoginView {
+        background: white;
+        padding: 3rem;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(30, 64, 175, 0.1);
+        max-width: 450px;
+        width: 100%;
+        border: 1px solid #e2e8f0;
+      }
+
+      #studentLoginView.active {
+        display: block;
+      }
+
+      #studentLoginView h2 {
+        color: #1e40af;
+        text-align: center;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+        font-weight: 600;
+        position: relative;
+      }
+
+      #studentLoginView h2::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background: linear-gradient(90deg, #1e40af, #3b82f6);
+        border-radius: 2px;
+      }
+
+      #studentLoginForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      #studentLoginForm label {
+        font-weight: 500;
+        color: #374151;
+        margin-bottom: 0.5rem;
+      }
+
+      #studentLoginForm input {
+        padding: 0.875rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f8fafc;
+      }
+
+      #studentLoginForm input:focus {
+        outline: none;
+        border-color: #3b82f6;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+      }
+
+      #studentLoginForm button {
+        padding: 0.875rem;
+        background: linear-gradient(135deg, #1e40af, #3b82f6);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 1rem;
+      }
+
+      #studentLoginForm button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(30, 64, 175, 0.3);
+      }
+
+      .center {
+        text-align: center;
+        margin-top: 2rem;
+        color: #64748b;
+      }
+
+      .center a {
+        color: #3b82f6;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      .center a:hover {
+        color: #1e40af;
+      }
+
+      /* Complaint View Styling */
+      #studentComplaintView {
+        padding: 40px;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      #studentComplaintView h2 {
+        color: #333;
+        text-align: center;
+        margin-bottom: 40px;
+        font-size: 2rem;
+        font-weight: 600;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      #studentComplaintView h3 {
+        color: #333;
+        margin: 40px 0 20px 0;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      hr {
+        border: none;
+        height: 2px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        margin: 40px 0;
+        border-radius: 2px;
+      }
+
+      /* Table Styling */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #e1e5e9;
+      }
+
+      th {
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      tbody tr:hover {
+        background-color: #f8f9ff;
+      }
+
+      tbody tr:last-child td {
+        border-bottom: none;
+      }
+
+      /* Status badges */
+      .status-pending {
+        background: #ffeaa7;
+        color: #d63031;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .status-progress {
+        background: #74b9ff;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      .status-resolved {
+        background: #00b894;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        font-weight: 600;
+      }
+
+      /* Logout link styling */
+      #studentLogout {
+        display: inline-block;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px 25px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        margin-top: 30px;
+      }
+
+      #studentLogout:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        #studentLoginView {
+          padding: 30px 20px;
+          margin: 20px;
+        }
+
+        #studentComplaintView {
+          padding: 20px;
+          margin: 10px;
+        }
+
+        table {
+          font-size: 0.9rem;
+        }
+
+        th,
+        td {
+          padding: 10px 8px;
+        }
+      }
+
+      /* Animation for form elements */
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      section.active {
+        animation: slideIn 0.5s ease-out;
+      }
+    </style>
   </head>
   <body>
     <main>
-      <!-- STUDENT LOGIN -->
+      <!--  -->
+
       <section id="studentLoginView" class="active">
         <h2>Student Login</h2>
         <form id="studentLoginForm">
           <label for="studentRoll">Roll Number</label>
-          <input id="studentRoll" type="text" required />
+          <input
+            id="studentRoll"
+            type="text"
+            required
+            placeholder="Enter your roll number"
+          />
 
           <label for="studentPassword">Password</label>
-          <input id="studentPassword" type="password" required />
+          <input
+            id="studentPassword"
+            type="password"
+            required
+            placeholder="Enter your password"
+          />
 
           <button type="submit">Login</button>
         </form>
 
         <p class="center">
-          Are you admin? <a href="admin.html" id="gotoAdminLogin">Login here</a>
+          Are you admin?
+          <a href="admin.html" id="gotoAdminLogin">Login here</a>
         </p>
       </section>
+
+      <!--  -->
+
+      <!-- STUDENT LOGIN -->
+      <!-- <section id="studentLoginView" class="active">
+        <h2>Student Login</h2>
+        <form id="studentLoginForm">
+          <label for="studentRoll">Roll Number</label>
+          <input
+            id="studentRoll"
+            type="text"
+            required
+            placeholder="Enter your roll number"
+          />
+
+          <label for="studentPassword">Password</label>
+          <input
+            id="studentPassword"
+            type="password"
+            required
+            placeholder="Enter your password"
+          />
+
+          <button type="submit">Login</button>
+        </form>
+
+        <p class="center">
+          Are you admin?
+          <a href="admin.html" id="gotoAdminLogin">Login here</a>
+        </p>
+      </section> -->
 
       <!-- STUDENT COMPLAINT -->
       <section id="studentComplaintView">
@@ -104,7 +516,9 @@
           </thead>
           <tbody></tbody>
         </table>
-        <p class="center"><a href="/client" id="studentLogout">Logout</a></p>
+        <p class="center">
+          <a href="/client" id="studentLogout">Logout</a>
+        </p>
       </section>
     </main>
     <script src="script.js"></script>

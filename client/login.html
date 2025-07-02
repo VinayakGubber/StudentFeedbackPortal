@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>College Complaint & Feedback System</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      main {
+        width: 100%;
+        max-width: 400px;
+      }
+
+      section {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        text-align: center;
+        display: none;
+      }
+
+      section.active {
+        display: block;
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 30px;
+        font-size: 1.8rem;
+        font-weight: 600;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      label {
+        text-align: left;
+        color: #555;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+
+      input,
+      select,
+      textarea {
+        padding: 12px 15px;
+        border: 2px solid #e1e8ed;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: #f9f9f9;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #999;
+      }
+
+      input[readonly] {
+        background: #f0f0f0;
+        color: #666;
+      }
+
+      button {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+      }
+
+      button:active {
+        transform: translateY(0);
+      }
+
+      .center {
+        margin-top: 25px;
+        color: #666;
+        font-size: 0.95rem;
+      }
+
+      .center a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+      }
+
+      .center a:hover {
+        color: #764ba2;
+        text-decoration: underline;
+      }
+
+      .toggle-buttons {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 5px;
+      }
+
+      .toggle-btn {
+        flex: 1;
+        padding: 10px 15px;
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #666;
+      }
+
+      .toggle-btn.active {
+        background: white;
+        color: #667eea;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-icon {
+        font-size: 3rem;
+        color: #667eea;
+        margin-bottom: 20px;
+      }
+
+      /* Table Styles */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      table th,
+      table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #e1e8ed;
+      }
+
+      table th {
+        background: #f8f9fa;
+        font-weight: 600;
+        color: #333;
+      }
+
+      .badge {
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .badge.Pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .badge.InProgress {
+        background: #d1ecf1;
+        color: #0c5460;
+      }
+
+      .badge.Resolved {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      hr {
+        margin: 30px 0;
+        border: none;
+        border-top: 1px solid #e1e8ed;
+      }
+
+      h3 {
+        color: #333;
+        margin-bottom: 15px;
+        font-size: 1.3rem;
+      }
+
+      @media (max-width: 480px) {
+        main {
+          max-width: 100%;
+        }
+
+        section {
+          padding: 30px 25px;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+        }
+
+        table {
+          font-size: 0.9rem;
+        }
+
+        table th,
+        table td {
+          padding: 8px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <!-- Student Login Section -->
+      <section id="studentLoginView" class="active">
+        <div class="form-icon">
+          <i class="fas fa-graduation-cap"></i>
+        </div>
+
+        <h2>Student Login</h2>
+        <form id="studentLoginForm">
+          <label for="studentRoll">Roll Number</label>
+          <input
+            id="studentRoll"
+            type="text"
+            required
+            placeholder="Enter your roll number"
+          />
+
+          <label for="studentPassword">Password</label>
+          <input
+            id="studentPassword"
+            type="password"
+            required
+            placeholder="Enter your password"
+          />
+
+          <button type="submit">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </button>
+        </form>
+
+        <p class="center">
+          Are you admin? <a href="#" id="gotoAdminLogin">Login here</a>
+        </p>
+      </section>
+
+      <!-- Admin Login Section -->
+      <section id="adminLoginView">
+        <div class="form-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+
+        <h2>Admin Login</h2>
+        <form id="adminLoginForm" novalidate>
+          <label for="adminUsername">Username</label>
+          <input
+            id="adminUsername"
+            name="adminUsername"
+            required
+            type="text"
+            placeholder="Enter admin username"
+          />
+
+          <label for="adminPassword">Password</label>
+          <input
+            id="adminPassword"
+            name="adminPassword"
+            required
+            type="password"
+            placeholder="Enter admin password"
+          />
+
+          <button type="submit"><i class="fas fa-shield-alt"></i> Login</button>
+        </form>
+
+        <p class="center">
+          Are you student? <a href="#" id="gotoStudentLogin">Login here</a>
+        </p>
+      </section>
+
+      <!-- Student Complaint Section -->
+      <section id="studentComplaintView">
+        <h2>Submit a Complaint</h2>
+        <form id="complaintForm" novalidate>
+          <label for="name">Full Name</label>
+          <input
+            id="name"
+            name="name"
+            required
+            type="text"
+            placeholder="Your full name"
+            readonly
+          />
+          <label for="rollNo">Roll Number</label>
+          <input
+            id="rollNo"
+            name="rollNo"
+            required
+            type="text"
+            placeholder="Your roll number"
+            readonly
+          />
+          <label for="email">Email Address</label>
+          <input
+            id="email"
+            name="email"
+            required
+            type="email"
+            placeholder="Your email address"
+            readonly
+          />
+          <label for="mobile">Mobile Number</label>
+          <input
+            id="mobile"
+            name="mobile"
+            required
+            type="text"
+            placeholder="Your mobile number"
+            readonly
+          />
+          <label for="category">Complaint Category</label>
+          <select id="category" name="category" required>
+            <option disabled selected value="">Select category</option>
+            <option value="Academics">Academics</option>
+            <option value="Facilities">Facilities</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Transport">Transport</option>
+            <option value="Others" selected>Others</option>
+          </select>
+          <label for="message">Complaint Details</label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows="4"
+            placeholder="Describe your complaint in detail"
+          ></textarea>
+          <button type="submit">Submit Complaint</button>
+        </form>
+        <hr />
+        <h3>Your Submitted Complaints</h3>
+        <table id="studentComplaintsTable">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Complaint</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <p class="center"><a href="#" id="studentLogout">Logout</a></p>
+      </section>
+
+      <!-- Admin Portal Section -->
+      <section id="adminPortalView">
+        <header><h1>College Complaint & Feedback System</h1></header>
+        <h2>Admin Portal <span id="newComplaintBadge">New</span></h2>
+
+        <div
+          class="dashboard-cards"
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+          "
+        >
+          <div
+            class="card total"
+            style="
+              background: #667eea;
+              color: white;
+              padding: 20px;
+              border-radius: 8px;
+              text-align: center;
+            "
+          >
+            <i
+              class="fas fa-file-alt"
+              style="font-size: 2rem; margin-bottom: 10px"
+            ></i>
+            <div>
+              <strong id="totalCount">0</strong
+              ><span style="display: block">Total</span>
+            </div>
+          </div>
+          <div
+            class="card pending"
+            style="
+              background: #ffc107;
+              color: white;
+              padding: 20px;
+              border-radius: 8px;
+              text-align: center;
+            "
+          >
+            <i
+              class="fas fa-hourglass-half"
+              style="font-size: 2rem; margin-bottom: 10px"
+            ></i>
+            <div>
+              <strong id="pendingCount">0</strong
+              ><span style="display: block">Pending</span>
+            </div>
+          </div>
+          <div
+            class="card inprogress"
+            style="
+              background: #17a2b8;
+              color: white;
+              padding: 20px;
+              border-radius: 8px;
+              text-align: center;
+            "
+          >
+            <i
+              class="fas fa-spinner"
+              style="font-size: 2rem; margin-bottom: 10px"
+            ></i>
+            <div>
+              <strong id="inProgressCount">0</strong
+              ><span style="display: block">In Progress</span>
+            </div>
+          </div>
+          <div
+            class="card resolved"
+            style="
+              background: #28a745;
+              color: white;
+              padding: 20px;
+              border-radius: 8px;
+              text-align: center;
+            "
+          >
+            <i
+              class="fas fa-check-circle"
+              style="font-size: 2rem; margin-bottom: 10px"
+            ></i>
+            <div>
+              <strong id="resolvedCount">0</strong
+              ><span style="display: block">Resolved</span>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="filters"
+          style="display: flex; gap: 15px; margin: 20px 0; flex-wrap: wrap"
+        >
+          <select id="filterCategory">
+            <option value="All">Categories</option>
+            <option value="Academics">Academics</option>
+            <option value="Facilities">Facilities</option>
+            <option value="Hostel">Hostel</option>
+            <option value="Transport">Transport</option>
+            <option value="Others">Others</option>
+          </select>
+          <select id="filterStatus">
+            <option value="All">Status</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search complaints..."
+          />
+        </div>
+
+        <table id="complaintsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Roll No</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Category</th>
+              <th>Message</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            padding: 0 10px;
+          "
+        >
+          <button id="logoutBtn" style="padding: 10px 25px; font-size: 0.95rem">
+            Logout
+          </button>
+          <button
+            onclick="exportToCSV()"
+            style="padding: 10px 25px; font-size: 0.95rem"
+          >
+            Export to CSV <i class="fas fa-download"></i>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Navigation between login forms
+      document
+        .getElementById("gotoAdminLogin")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          document
+            .getElementById("studentLoginView")
+            .classList.remove("active");
+          document.getElementById("adminLoginView").classList.add("active");
+        });
+
+      document
+        .getElementById("gotoStudentLogin")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          document.getElementById("adminLoginView").classList.remove("active");
+          document.getElementById("studentLoginView").classList.add("active");
+        });
+
+      // Student logout functionality
+      document
+        .getElementById("studentLogout")
+        .addEventListener("click", (e) => {
+          e.preventDefault();
+          localStorage.removeItem("student");
+          document.getElementById("studentComplaintView").style.display =
+            "none";
+          document.getElementById("studentLoginView").classList.add("active");
+          document.getElementById("studentLoginView").style.display = "block";
+        });
+
+      // Setup function to determine which page logic to load
+      function setupStudentLogic() {
+        // This function will be called by your script.js
+      }
+
+      // Export CSV functionality placeholder
+      function exportToCSV() {
+        // Add your CSV export logic here
+        alert("CSV export functionality would be implemented here");
+      }
+    </script>
+
+    <!-- Load your existing script.js -->
+    <script src="script.js"></script>
+  </body>
+</html>
