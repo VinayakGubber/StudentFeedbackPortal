@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Health Check - Instance 1</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow-x: hidden;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 3rem;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        max-width: 500px;
+        width: 90%;
+        position: relative;
+        overflow: hidden;
+        animation: fadeInUp 0.8s ease-out;
+      }
+
+      .container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        animation: shimmer 2s infinite;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      .status-indicator {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, #4caf50, #45a049);
+        margin: 0 auto 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 10px 30px rgba(76, 175, 80, 0.3);
+        animation: pulse 2s infinite;
+        position: relative;
+      }
+
+      .status-indicator::before {
+        content: "✓";
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .status-indicator::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 3px solid #4caf50;
+        animation: ripple 2s infinite;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      @keyframes ripple {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.5);
+          opacity: 0;
+        }
+      }
+
+      h1 {
+        color: #2c3e50;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        font-weight: 300;
+        letter-spacing: -1px;
+      }
+
+      .subtitle {
+        color: #7f8c8d;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+        font-weight: 400;
+      }
+
+      .instance-card {
+        background: linear-gradient(135deg, #3498db, #2980b9);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 2rem 0;
+        box-shadow: 0 8px 25px rgba(52, 152, 219, 0.3);
+        transition: transform 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .instance-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          #e74c3c,
+          #f39c12,
+          #f1c40f,
+          #2ecc71,
+          #3498db,
+          #9b59b6
+        );
+        background-size: 400% 100%;
+        animation: rainbow 3s linear infinite;
+      }
+
+      @keyframes rainbow {
+        0% {
+          background-position: 0% 50%;
+        }
+        100% {
+          background-position: 400% 50%;
+        }
+      }
+
+      .instance-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .instance-number {
+        font-size: 2rem;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .instance-label {
+        font-size: 1rem;
+        opacity: 0.9;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .stats {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .stat-item {
+        background: rgba(52, 152, 219, 0.1);
+        padding: 1rem;
+        border-radius: 8px;
+        border: 1px solid rgba(52, 152, 219, 0.2);
+        transition: all 0.3s ease;
+      }
+
+      .stat-item:hover {
+        background: rgba(52, 152, 219, 0.2);
+        transform: translateY(-2px);
+      }
+
+      .stat-value {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #2980b9;
+      }
+
+      .stat-label {
+        font-size: 0.8rem;
+        color: #7f8c8d;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 0.5rem;
+      }
+
+      .timestamp {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+        color: #7f8c8d;
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 2rem;
+          margin: 1rem;
+        }
+
+        h1 {
+          font-size: 2rem;
+        }
+
+        .instance-number {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="status-indicator"></div>
+
+      <h1>Health Check</h1>
+      <p class="subtitle">Application Load Balancer Status</p>
+
+      <div class="instance-card">
+        <div class="instance-number">Instance 1</div>
+        <div class="instance-label">Active & Healthy</div>
+      </div>
+
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Uptime</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">✓</div>
+          <div class="stat-label">Status</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value" id="response-time">~2ms</div>
+          <div class="stat-label">Response</div>
+        </div>
+      </div>
+
+      <div class="timestamp">Last checked: <span id="timestamp"></span></div>
+    </div>
+
+    <script>
+      // Update timestamp
+      function updateTimestamp() {
+        const now = new Date();
+        document.getElementById("timestamp").textContent = now.toLocaleString();
+      }
+
+      // Simulate response time variation
+      function updateResponseTime() {
+        const responseTime = Math.floor(Math.random() * 5) + 1;
+        document.getElementById(
+          "response-time"
+        ).textContent = `~${responseTime}ms`;
+      }
+
+      // Initialize
+      updateTimestamp();
+      updateResponseTime();
+
+      // Update every 30 seconds
+      setInterval(() => {
+        updateTimestamp();
+        updateResponseTime();
+      }, 30000);
+
+      // Add some interactive sparkle effects
+      document.addEventListener("mousemove", (e) => {
+        if (Math.random() > 0.95) {
+          createSparkle(e.clientX, e.clientY);
+        }
+      });
+
+      function createSparkle(x, y) {
+        const sparkle = document.createElement("div");
+        sparkle.style.position = "fixed";
+        sparkle.style.left = x + "px";
+        sparkle.style.top = y + "px";
+        sparkle.style.width = "4px";
+        sparkle.style.height = "4px";
+        sparkle.style.background = "#f39c12";
+        sparkle.style.borderRadius = "50%";
+        sparkle.style.pointerEvents = "none";
+        sparkle.style.zIndex = "1000";
+        sparkle.style.animation = "sparkleAnimation 1s ease-out forwards";
+
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => {
+          sparkle.remove();
+        }, 1000);
+      }
+
+      // Add sparkle animation
+      const style = document.createElement("style");
+      style.textContent = `
+      @keyframes sparkleAnimation {
+        0% {
+          transform: scale(0) rotate(0deg);
+          opacity: 1;
+        }
+        50% {
+          transform: scale(1) rotate(180deg);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(0) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    `;
+      document.head.appendChild(style);
+    </script>
+  </body>
+</html>
